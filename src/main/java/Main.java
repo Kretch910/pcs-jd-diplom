@@ -23,8 +23,8 @@ public class Main {
 
         int port = 8989;
 
-        while (true) {
-            try (ServerSocket serverSocket = new ServerSocket(port)) {
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            while (true) {
                 Socket clientSocket = serverSocket.accept();
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -34,9 +34,12 @@ public class Main {
                 System.out.println("Поиск по слову " + word);
 
                 out.println(String.format(listToJson(engine.search(word))));
-            } catch (IOException exception) {
-                exception.printStackTrace();
+
+                out.close();
+                in.close();
             }
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 }

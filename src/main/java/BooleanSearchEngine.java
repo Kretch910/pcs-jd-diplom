@@ -8,7 +8,7 @@ import java.util.*;
 
 public class BooleanSearchEngine implements SearchEngine {
 
-    Map<String, List<PageEntry>> answers = new HashMap<>();
+    private Map<String, List<PageEntry>> answers = new HashMap<>();
 
     public BooleanSearchEngine(File pdfsDir) throws IOException {
 

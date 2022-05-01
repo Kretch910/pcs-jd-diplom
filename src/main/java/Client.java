@@ -15,7 +15,7 @@ public class Client {
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader((new InputStreamReader(clientSocket.getInputStream())));
 
-            out.println("hh");
+            out.println("Бизнес");
 
             String resp = in.readLine();
 

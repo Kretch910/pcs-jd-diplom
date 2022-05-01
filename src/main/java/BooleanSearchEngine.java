@@ -8,7 +8,7 @@ import java.util.*;
 
 public class BooleanSearchEngine implements SearchEngine {
 
-    private Map<String, List<PageEntry>> answers = new HashMap<>();
+    private Map<String, TreeSet<PageEntry>> answers = new HashMap<>();
 
     public BooleanSearchEngine(File pdfsDir) throws IOException {
 
@@ -27,7 +27,7 @@ public class BooleanSearchEngine implements SearchEngine {
                 }
 
                 for (Map.Entry<String, Integer> item : freqs.entrySet()) {
-                    answers.putIfAbsent(item.getKey(), new ArrayList<>());
+                    answers.putIfAbsent(item.getKey(), new TreeSet<>());
                     answers.get(item.getKey()).add(new PageEntry(file.getName(), i, item.getValue()));
                 }
             }
@@ -36,6 +36,13 @@ public class BooleanSearchEngine implements SearchEngine {
 
     @Override
     public List<PageEntry> search(String word) {
-        return answers.get(word);
+        ArrayList<PageEntry> answer = new ArrayList<>();
+
+        TreeSet<PageEntry> answersSet = new TreeSet<>(answers.get(word.toLowerCase()));
+
+        while (!answersSet.isEmpty()) {
+            answer.add(answersSet.pollLast());
+        }
+        return answer;
     }
 }
